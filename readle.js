@@ -8,7 +8,12 @@ var Readle = {
     var anchorNode = selection.anchorNode;
     var selectionString = this._getSelection().toString();
 
-    $('p:contains("' + anchorNode.wholeText + '")').css('background', 'yellow');
+    var anchorDOM = $('p:contains("' + anchorNode.wholeText + '")')
+    var anchorParHTML = anchorDOM.html();
+    var wrappedSelString = '<span class="readle-highlighting">'+ selectionString+ '</span>'
+
+    anchorDOM.html(anchorParHTML.replace(selectionString, wrappedSelString))
+    $('span.readle-highlighting').css('background', 'yellow')
   },
 
   _getSelection: function _getSelection() {

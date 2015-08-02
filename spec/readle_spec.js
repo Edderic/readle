@@ -39,12 +39,22 @@ describe('Readle', function() {
 
         Readle.highlightSelectedText();
 
-        expect($('p:contains("Hello there I should be highlighted")').attr('style')).
-          toBe("background: yellow;");
         expect($('p:contains("Hello there I should not be highlighted")').
           attr('style')).
           not.
           toBe("background: yellow;");
+      });
+
+      it('should highlight just sections', function() {
+        spyOn(Readle,'_getSelection').and.returnValue(selObj);
+
+        Readle.highlightSelectedText();
+
+        expect($('span.readle-highlighting').attr('style')).
+          toBe("background: yellow;");
+
+        expect($('span.readle-highlighting').html()).
+          toBe("Hello there");
       });
     });
   });
