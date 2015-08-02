@@ -22,16 +22,12 @@ function getCurrentTabUrl(callback) {
     // one tab, so we can safely assume that |tabs| is a non-empty array.
     // A window can only have one active tab at a time, so the array consists of
     // exactly one tab.
-    var tab = tabs[0];
-    chrome.tabs.executeScript({
-      code: 'console.log(document.getSelection().toString());'
-    });
 
     // chrome.tabs.get(tab.id, function(tab){
-      // chrome.windows.get(tab.windowId, function(win){
-        // console.log(win);
-        // console.log(win.getSelection().toString()); // THIS IS THE WINDOW OBJECT
-      // });
+    // chrome.windows.get(tab.windowId, function(win){
+    // console.log(win);
+    // console.log(win.getSelection().toString()); // THIS IS THE WINDOW OBJECT
+    // });
     // });
 
     // chrome.tabs.executeScript(0, {code:'console.log("hi"); '})
@@ -105,6 +101,12 @@ function renderStatus(statusText) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  chrome.tabs.executeScript(null, { file: 'jquery-2.1.4.min.js' }, function() {
+    chrome.tabs.executeScript(null, { file: 'readle.js' }, function() {
+      chrome.tabs.executeScript(null, {code: 'Readle.highlightSelectedText();'});
+    });
+  });
+
   getCurrentTabUrl(function(url) {
     // Put the image URL in Google search.
     renderStatus('Performing Google Image search for ' + url);

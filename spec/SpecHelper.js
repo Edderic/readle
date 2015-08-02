@@ -12,4 +12,8 @@ beforeEach(function () {
       };
     }
   });
+
+  if ($('body #jasmine_content').length == 0) {
+    $('body').prepend('<div id="jasmine_content"></div>')
+  }
 });
