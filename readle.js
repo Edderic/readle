@@ -4,9 +4,11 @@ var Readle = {
   },
 
   highlightSelectedText: function highlightSelectedText() {
-    var selectionString = this._getSelection().toString()
+    var selection = this._getSelection();
+    var anchorNode = selection.anchorNode;
+    var selectionString = this._getSelection().toString();
 
-    $('p:contains("' + selectionString + '")').css('background', 'yellow');
+    $('p:contains("' + anchorNode.wholeText + '")').css('background', 'yellow');
   },
 
   _getSelection: function _getSelection() {

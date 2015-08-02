@@ -3,15 +3,26 @@ describe('Readle', function() {
     $('#jasmine_content').html(
       '<p>Hello there I should be highlighted.</p>' +
         '<p>I should not be highlighted</p>' +
-        '<p>Hello there I should also be highlighted.</p>'
+        '<p>Hello there I should not be highlighted.</p>'
     )
   });
 
   describe('highlightSelectedText', function() {
     describe('while selecting the word "Hello" from the first paragraph', function() {
-      it('should highlight all paragraphs that have that word', function() {
-        var selObj = {
+      var selObj, anchorNode, focusNode
+
+      beforeEach (function() {
+        anchorNode = {
+          wholeText: "Hello there I should be highlighted."
+        }
+
+        focusNode = {
+          wholeText: "Hello there I should be highlighted."
+        }
+
+        selObj = {
           anchorOffset: 0,
+          anchorNode: anchorNode,
           baseOffset: 0,
           extentOffset: 11,
           focusOffset: 11,
@@ -21,12 +32,18 @@ describe('Readle', function() {
             return "Hello there";
           }
         }
+      });
 
+      it('should not highlight all paragraphs that have that word', function() {
         spyOn(Readle,'_getSelection').and.returnValue(selObj);
 
         Readle.highlightSelectedText();
 
-        expect($('p:contains("Hello there")').attr('style')).
+        expect($('p:contains("Hello there I should be highlighted")').attr('style')).
+          toBe("background: yellow;");
+        expect($('p:contains("Hello there I should not be highlighted")').
+          attr('style')).
+          not.
           toBe("background: yellow;");
       });
     });
